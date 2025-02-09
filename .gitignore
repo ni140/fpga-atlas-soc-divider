@@ -1,0 +1,22 @@
+# Ignore all files
+*
+
+# Allow directories
+!*/
+
+# Allow text files
+!*.json
+!*.v
+!*.yml
+
+# Ignore specific folders
+db/
+
+# Allow Quartus project files
+!*.sdc
+!*.qpf
+!*.qsf
+
+# Allow specific files
+!.prettierignore
+!.gitignore

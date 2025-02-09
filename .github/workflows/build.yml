@@ -1,0 +1,32 @@
+name: build
+
+permissions: read-all
+
+on:
+  push:
+  pull_request:
+    branches:
+      - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  synthesis:
+    name: build
+    runs-on: ubuntu-latest
+    container: chaseruskin/quartus-prime-lite:23.1.1-ubuntu-22.04
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run compilation flow
+        run: quartus_sh --flow compile fpga-atlas-soc-divider.qpf
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: OutputFiles
+          path: output_files/
